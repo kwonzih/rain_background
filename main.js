@@ -18,7 +18,7 @@ class Rain {
     constructor(x,y, velocity){
         this.x = x
         this.y = y
-        this.velocity=velocity
+        this.velocity = velocity
     }
 
     draw(){
@@ -87,7 +87,7 @@ class Drop {
 
     draw(){
         ctx.beginPath()
-        ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2)
+        ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2, false)
         ctx.fillStyle = '#8899a6'
         ctx.fill()
     }
@@ -109,7 +109,7 @@ function init(){
     canvas.height = innerHeight
 
     //화면 크기따라 일정한 갯수
-    Total = Math.floor(innerWidth * innerHeight / 15000)     
+    Total = Math.floor(innerWidth * innerHeight / 5000)     
     rains = []
     drops = []
     thunder = new Thunder()
@@ -119,7 +119,7 @@ function init(){
         const x = randomBetween(0,innerWidth)
         const y = randomBetween(0,innerHeight)
         const velocity = { //각각 떨어지는 속도 다르게
-            x: randomBetween(-1,1),
+            x: randomBetween(-1,2),
             y: randomBetween(13,18)
         } 
         rains.push(new Rain(x,y,velocity))
@@ -149,23 +149,26 @@ canvas.addEventListener('mousemove', e => {
     mouse.x = e.clientX
     mouse.y = e.clientY
 })
+init()
+render() 
 
 /**날씨 API 로 정보 데이터 가져오기 */
-function getWeatherData(){
-    const lat = 35.82786144708566
-    const lon = 128.61763385181158
-    const appKey = '86d3668654d9ef416d45c04ccf550643'
-    const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appKey}`)
-    return data
-}
+// function getWeatherData(){
+//     const lat = 35.82786144708566
+//     const lon = 128.61763385181158
+//     const appKey = '854b5d0fe158d98fb7a6c090cf60cd3c'
+//     const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appKey}`)
+//     console.log(appKey) 
+//     return data
+// }
 
 /**QLDHSMS SKFAKS ZOSQJTMDP RMFUWNRL */
-getWeatherData().then(result => {
-    const currentWeather = result.data.weather[0].main
-    console.log(currentWeather)
-    const rainingStatus = ['Rain','Thunderstorm','Drizzle','Clear','Clouds']
-    if (rainingStatus.includes(currentWeather)){
-        init()
-        render() 
-    }
-})
+// getWeatherData().then(result => {
+//     const currentWeather = result.data.weather[0].main
+//     console.log(currentWeather)
+//     const rainingStatus = ['Rain','Thunderstorm','Drizzle','Clear','Clouds']
+//     if (rainingStatus.includes(currentWeather)){
+//         init()
+//         render() 
+//     }
+// })
