@@ -64,14 +64,14 @@ class Thunder {
 
     draw(){
         const gradient = ctx.createLinearGradient(0, 0, 0, innerHeight)
-        gradient.addColorStop(0, `rgba(66,84,99, ${this.opacity})`)
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`)
         gradient.addColorStop(1, `rgba(18,23,27, ${this.opacity})`)
         ctx.fillStyle = gradient
         ctx.fillRect(0,0,innerWidth, innerHeight) //전체 배경색
     }
     animate(){
         if (this.opacity < 0) return
-        this.opacity -= 0.005
+        this.opacity -= 0.097
         this.draw()
     }
 }
@@ -124,6 +124,7 @@ function init(){
         } 
         rains.push(new Rain(x,y,velocity))
     }
+    
 }
 
 /**렌더 함수 */
@@ -140,35 +141,35 @@ function render(){
 }
 
 /**resize 이벤트 */
-window.addEventListener('resize', ()=>init())
+window.addEventListener('resize', ()=> init())
 
 /**mouse 이벤트 */
-canvas. addEventListener('mouseenter', () => mouse.isActive = true)
-canvas. addEventListener('mouseleave', () => mouse.isActive = false)
+canvas.addEventListener('mouseenter', () => mouse.isActive = true)
+canvas.addEventListener('mouseleave', () => mouse.isActive = false)
 canvas.addEventListener('mousemove', e => {
     mouse.x = e.clientX
     mouse.y = e.clientY
 })
-init()
-render() 
+
+// init()
+// render() 
 
 /**날씨 API 로 정보 데이터 가져오기 */
-// function getWeatherData(){
-//     const lat = 35.82786144708566
-//     const lon = 128.61763385181158
-//     const appKey = '854b5d0fe158d98fb7a6c090cf60cd3c'
-//     const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appKey}`)
-//     console.log(appKey) 
-//     return data
-// }
+ function getWeatherData(){
+     const lat = 35.82786144708566
+     const lon = 128.61763385181158
+     const appKey = '854b5d0fe158d98fb7a6c090cf60cd3c'
+     const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appKey}`)
+     return data
+ }
 
-/**QLDHSMS SKFAKS ZOSQJTMDP RMFUWNRL */
-// getWeatherData().then(result => {
-//     const currentWeather = result.data.weather[0].main
-//     console.log(currentWeather)
-//     const rainingStatus = ['Rain','Thunderstorm','Drizzle','Clear','Clouds']
-//     if (rainingStatus.includes(currentWeather)){
-//         init()
-//         render() 
-//     }
-// })
+/**비오는 날에만 캔버스에 그려주기 */
+ getWeatherData().then(result => {
+     const currentWeather = result.data.weather[0].main
+     console.log(currentWeather)
+     const rainingStatus = ['Rain','Thunderstorm','Drizzle','Clear','Clouds']
+     if (rainingStatus.includes(currentWeather)){
+         init()
+         render() 
+     }
+ })
